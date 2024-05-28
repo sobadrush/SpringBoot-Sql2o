@@ -31,4 +31,11 @@ public class DeptRepositoryImpl_Test {
         System.out.println("deptPO = " + deptPO);
     }
 
+    @Test
+    @Disabled
+    @DisplayName("Test003: 新增「部門」(Dept) 資料")
+    void test_003() {
+        int rs = deptRepo.insertDept("數發部", "愛國西路");
+        System.out.println("rs = " + rs);
+    }
 }

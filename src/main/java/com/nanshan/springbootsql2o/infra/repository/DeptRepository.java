@@ -7,7 +7,7 @@ import java.util.List;
 public interface DeptRepository {
     List<DeptPO> selectAllDept();
     DeptPO selectDept(Integer deptId);
-    // void insertDept(String deptName, String location);
+    int insertDept(String deptName, String location);
     // void updateDept(String deptName, String location, Integer deptId);
     // void deleteDept(Integer deptId);
     // void deleteAllDept();
