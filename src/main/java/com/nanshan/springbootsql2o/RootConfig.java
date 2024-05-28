@@ -21,7 +21,8 @@ public class RootConfig implements TransactionManagementConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=DB_EMP_DEPT");
+        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=DB_EMP_DEPT" + ";" +
+                                                    "encrypt=true;trustServerCertificate=true");
         dataSource.setUsername("sa");
         dataSource.setPassword("Ver7CompleXPW");
         return dataSource;
