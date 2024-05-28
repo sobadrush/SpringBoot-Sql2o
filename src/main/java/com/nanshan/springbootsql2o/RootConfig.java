@@ -3,11 +3,11 @@ package com.nanshan.springbootsql2o;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.sql2o.Sql2o;
 
 import javax.sql.DataSource;
@@ -15,23 +15,40 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @Slf4j
-public class RootConfig implements TransactionManagementConfigurer {
+public class RootConfig {
 
     @Bean(name = "dataSource")
-    public DataSource dataSource() {
+    @Profile("nanshan_macbook")
+    public DataSource dataSource1() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=DB_EMP_DEPT" + ";" +
-                                                    "encrypt=true;trustServerCertificate=true");
+        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=DB_EMP_DEPT" + "trustServerCertificate=true");
+        dataSource.setUsername("sa");
+        dataSource.setPassword("Ver7CompleXPW");
+        return dataSource;
+    }
+
+    @Bean(name = "dataSource")
+    @Profile("roger_macbook")
+    public DataSource dataSource2() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        dataSource.setUrl("jdbc:sqlserver://localhost:1437;database=DB_EMP_DEPT" + ";trustServerCertificate=true");
         dataSource.setUsername("sa");
         dataSource.setPassword("Ver7CompleXPW");
         return dataSource;
     }
 
     @Bean
-    @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return new DataSourceTransactionManager(dataSource());
+    @Profile("nanshan_macbook")
+    public PlatformTransactionManager transactionManager1(DataSource ds) {
+        return new DataSourceTransactionManager(ds);
+    }
+
+    @Bean
+    @Profile("roger_macbook")
+    public PlatformTransactionManager transactionManager2(DataSource ds) {
+        return new DataSourceTransactionManager(ds);
     }
 
     @Bean
