@@ -9,6 +9,6 @@ public interface DeptRepository {
     DeptPO selectDept(Integer deptId);
     int insertDept(String deptName, String location);
     int updateDept(String deptName, String location, Integer deptId);
-    // void deleteDept(Integer deptId);
+    int deleteDept(Integer deptId);
     // void deleteAllDept();
 }

@@ -46,4 +46,12 @@ public class DeptRepositoryImpl_Test {
         var updateRs = deptRepo.updateDept("財務部_2", "台灣台北_2", 10);
         System.out.println("updateRs = " + updateRs);
     }
+
+    @Test
+    @Disabled
+    @DisplayName("Test005: 刪除「部門」(Dept) 資料")
+    void test_005() {
+        var deleteRs = deptRepo.deleteDept(60);
+        System.out.println("deleteRs = " + deleteRs);
+    }
 }

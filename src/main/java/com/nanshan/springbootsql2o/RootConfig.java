@@ -39,13 +39,13 @@ public class RootConfig {
         return dataSource;
     }
 
-    @Bean
+    @Bean(name = "myTxManager")
     @Profile("nanshan_macbook")
     public PlatformTransactionManager transactionManager1(DataSource ds) {
         return new DataSourceTransactionManager(ds);
     }
 
-    @Bean
+    @Bean(name = "myTxManager")
     @Profile("roger_macbook")
     public PlatformTransactionManager transactionManager2(DataSource ds) {
         return new DataSourceTransactionManager(ds);

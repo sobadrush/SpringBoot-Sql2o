@@ -86,4 +86,16 @@ public class DeptRepositoryImpl implements DeptRepository {
         return rs;
     }
 
+    @Override
+    public int deleteDept(Integer deptId) {
+        int rs = 0;
+        try (Connection con = sql2o.open()) {
+            rs = con.createQuery("DELETE FROM DEPT_TB WHERE DEPTNO = :deptId")
+                    .addParameter("deptId", deptId)
+                    .executeUpdate()
+                    .getResult();
+        }
+        return rs;
+    }
+
 }
