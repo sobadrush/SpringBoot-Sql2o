@@ -38,4 +38,12 @@ public class DeptRepositoryImpl_Test {
         int rs = deptRepo.insertDept("數發部", "愛國西路");
         System.out.println("rs = " + rs);
     }
+
+    @Test
+    @Disabled
+    @DisplayName("Test003: 更新「部門」(Dept) 資料")
+    void test_004() {
+        var updateRs = deptRepo.updateDept("財務部_2", "台灣台北_2", 10);
+        System.out.println("updateRs = " + updateRs);
+    }
 }

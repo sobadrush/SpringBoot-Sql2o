@@ -72,4 +72,18 @@ public class DeptRepositoryImpl implements DeptRepository {
         }
     }
 
+    @Override
+    public int updateDept(String deptName, String location, Integer deptId) {
+        int rs = 0;
+        try (Connection con = sql2o.open()) {
+            rs = con.createQuery("UPDATE DEPT_TB SET DNAME = :deptName, LOC = :location WHERE DEPTNO = :deptId")
+                    .addParameter("deptName", deptName)
+                    .addParameter("location", location)
+                    .addParameter("deptId", deptId)
+                    .executeUpdate()
+                    .getResult();
+        }
+        return rs;
+    }
+
 }
