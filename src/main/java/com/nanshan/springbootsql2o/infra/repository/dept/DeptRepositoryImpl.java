@@ -4,6 +4,7 @@ import com.nanshan.springbootsql2o.infra.repository.DeptRepository;
 import com.nanshan.springbootsql2o.infra.repository.dept.po.DeptPO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -63,13 +64,22 @@ public class DeptRepositoryImpl implements DeptRepository {
 
     @Override
     public int insertDept(String dept_name, String dept_loc) {
-        DeptPO paramPO = DeptPO.builder().deptName(dept_name).location(dept_loc).build();
-        try (Connection con = sql2o.open()) {
-            return con.createQuery("INSERT INTO DEPT_TB (DNAME, LOC) VALUES (:deptName, :location)")
+        int result = 0;
+        try (Connection con = sql2o.beginTransaction(Isolation.READ_COMMITTED.value())) {
+
+            DeptPO paramPO = DeptPO.builder().deptName(dept_name).location(dept_loc).build();
+            result = con.createQuery("INSERT INTO DEPT_TB (DNAME, LOC) VALUES (:deptName, :location)")
                     .bind(paramPO) // 這裡會自動將 PO 的屬性對應到 SQL 的參數
                     .executeUpdate()
                     .getResult();
+
+            if(result > 0) {
+                con.commit();
+            } else {
+                con.rollback();
+            }
         }
+        return result;
     }
 
     @Override
