@@ -10,7 +10,8 @@ Configuration:
       - name: log-path
         value: "logs"
       - name: log-pattern
-        value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+#        value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        value: "[%-5level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] [%X] [%X{traceId}] [thread: %t] 【logger: %c{1}】 - %msg%n"
 
   Appenders:
 
@@ -50,11 +51,11 @@ Configuration:
       - name: com.nanshan
         level: INFO
         additivity: false
-        Filters:
-          ThreadContextMapFilter: # ThreadContextMapFilter 用來過濾日誌，只有符合條件的日誌才會被輸出
-            - KeyValuePair:
-                key: testKey
-                value: AAA # key 為 test 的值必須為 123 才會被輸出
+#        Filters:
+#          ThreadContextMapFilter: # ThreadContextMapFilter 用來過濾日誌，只有符合條件的日誌才會被輸出
+#            - KeyValuePair:
+#                key: testKey
+#                value: AAA # key 為 test 的值必須為 123 才會被輸出
         AppenderRef:
           - ref: My_Console_Appender
             level: INFO
