@@ -1,3 +1,6 @@
 spring:
   application:
     name: SpringBoot-Sql2o
+logging:
+#  config: classpath:log4j2-dev.xml
+  config: classpath:log4j2-dev.yaml
