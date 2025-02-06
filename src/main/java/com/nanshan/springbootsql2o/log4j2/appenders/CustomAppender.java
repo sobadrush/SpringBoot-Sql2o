@@ -8,6 +8,7 @@ import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginElement;
 import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.layout.PatternLayout;
@@ -52,15 +53,15 @@ public class CustomAppender extends AbstractAppender {
 
     @PluginFactory
     public static CustomAppender createAppender(@PluginAttribute("name") String name,
-                                                @PluginAttribute("layout") String layoutPattern) {
+                                                @PluginElement("layout") Layout<? extends Serializable> layout) {
         if (name == null) {
             throw new IllegalArgumentException("No name provided for CustomAppender");
         }
 
-        if (layoutPattern == null || layoutPattern.isBlank()) {
+        if (layout == null) {
             return new CustomAppender(name, null, PatternLayout.createDefaultLayout(), true, Property.EMPTY_ARRAY);
         }
 
-        return new CustomAppender(name, null, PatternLayout.newBuilder().withPattern(layoutPattern).build(), true, Property.EMPTY_ARRAY);
+        return new CustomAppender(name, null, layout, true, Property.EMPTY_ARRAY);
     }
 }

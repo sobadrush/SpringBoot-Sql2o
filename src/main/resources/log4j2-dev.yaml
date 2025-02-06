@@ -24,7 +24,19 @@ Configuration:
     RogerCustomerAppender: # 對應 @Plugin(name = "RogerCustomerAppender" ...)
       name: My_CustomAppender
       # type: com.nanshan.springbootsql2o.log4j2.appenders.CustomAppender  # 你的自定义 Appender 类
-      layout: ${log-pattern}
+      # layout: ${log-pattern}
+      JSONLayout:
+        compact: true
+        eventEol: true
+        properties: true
+        stacktraceAsString: true
+        includeTimeMillis: true
+        includeStacktrace: true
+        KeyValuePair:
+          - key: version
+            value: "$${env:VERSION}"
+          - key: service
+            value: "$${env:SERVICE}"
 
     RollingFile:
       name: My_RollingFile_Appender
@@ -56,11 +68,11 @@ Configuration:
       - name: com.nanshan
         level: INFO
         additivity: false
-#        Filters:
-#          ThreadContextMapFilter: # ThreadContextMapFilter 用來過濾日誌，只有符合條件的日誌才會被輸出
-#            - KeyValuePair:
-#                key: testKey
-#                value: AAA # key 為 test 的值必須為 123 才會被輸出
+        #        Filters:
+        #          ThreadContextMapFilter: # ThreadContextMapFilter 用來過濾日誌，只有符合條件的日誌才會被輸出
+        #            - KeyValuePair:
+        #                key: testKey
+        #                value: AAA # key 為 test 的值必須為 123 才會被輸出
         AppenderRef:
           - ref: My_Console_Appender
             level: INFO
