@@ -10,16 +10,21 @@ Configuration:
       - name: log-path
         value: "logs"
       - name: log-pattern
-#        value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        # value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
         value: "[%-5level] [%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] [%X] [%X{traceId}] [thread: %t] 【logger: %c{1}】 - %msg%n"
 
   Appenders:
 
-    Console:
-      name: My_Console_Appender
-      target: SYSTEM_OUT
-      PatternLayout:
-        pattern: ${log-pattern}
+    # Console:
+    #   name: My_Console_Appender
+    #   target: SYSTEM_OUT
+    #   PatternLayout:
+    #     pattern: ${log-pattern}
+
+    RogerCustomerAppender: # 對應 @Plugin(name = "RogerCustomerAppender" ...)
+      name: My_CustomAppender
+      # type: com.nanshan.springbootsql2o.log4j2.appenders.CustomAppender  # 你的自定义 Appender 类
+      layout: ${log-pattern}
 
     RollingFile:
       name: My_RollingFile_Appender
@@ -61,3 +66,4 @@ Configuration:
             level: INFO
           - ref: My_RollingFile_Appender
             level: INFO
+          - ref: My_CustomAppender
